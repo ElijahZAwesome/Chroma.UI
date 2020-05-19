@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using Chroma.Graphics;
+using Chroma.Input;
 
 namespace Chroma.UI
 {
@@ -17,6 +18,10 @@ namespace Chroma.UI
 
         public Vector2 CalculatedPosition => (AnchorPoint + Position);
         public Vector2 CalculatedSize => (Size * Scale);
+
+        private bool LMBPressedLastFrame = false;
+        private bool RMBPressedLastFrame = false;
+        private bool MMBPressedLastFrame = false;
 
         public ChromaControl()
         {
@@ -42,7 +47,45 @@ namespace Chroma.UI
 
         public virtual void Update(float delta)
         {
+            LMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Left);
+            RMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Right);
+            MMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Middle);
         }
 
+        public bool GetMouseUp(MouseButton button)
+        {
+            bool pressedLastFrame = button switch
+            {
+                MouseButton.Left => LMBPressedLastFrame,
+                MouseButton.Middle => MMBPressedLastFrame,
+                MouseButton.Right => RMBPressedLastFrame,
+                _ => false
+            };
+
+            if (pressedLastFrame && Mouse.IsButtonUp(button))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool GetMouseDown(MouseButton button)
+        {
+            bool pressedLastFrame = button switch
+            {
+                MouseButton.Left => LMBPressedLastFrame,
+                MouseButton.Middle => MMBPressedLastFrame,
+                MouseButton.Right => RMBPressedLastFrame,
+                _ => false
+            };
+
+            if (!pressedLastFrame && Mouse.IsButtonDown(button))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
