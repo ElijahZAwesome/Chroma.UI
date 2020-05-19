@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chroma.UI", "Chroma.UI\Chroma.UI.csproj", "{1DA63BF7-85FD-46DE-BC33-5743C574B958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chroma.UI.ExampleProject", "Chroma.UI.ExampleProject\Chroma.UI.ExampleProject.csproj", "{ED334245-5718-45B8-ACCA-D0C1DE0BC811}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DA63BF7-85FD-46DE-BC33-5743C574B958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA63BF7-85FD-46DE-BC33-5743C574B958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA63BF7-85FD-46DE-BC33-5743C574B958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA63BF7-85FD-46DE-BC33-5743C574B958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED334245-5718-45B8-ACCA-D0C1DE0BC811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED334245-5718-45B8-ACCA-D0C1DE0BC811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED334245-5718-45B8-ACCA-D0C1DE0BC811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED334245-5718-45B8-ACCA-D0C1DE0BC811}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F030030-6A82-4046-B3A9-ABB64618FB4F}
+	EndGlobalSection
+EndGlobal

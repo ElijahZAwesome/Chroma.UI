@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chroma" Version="0.3.2-alpha" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0-preview.4.20251.6" />
+  </ItemGroup>
+
+</Project>
