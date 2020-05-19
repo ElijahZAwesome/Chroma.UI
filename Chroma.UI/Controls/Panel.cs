@@ -29,7 +29,7 @@ namespace Chroma.UI.Controls
                 context.DrawTexture(Texture, 
                     CalculatedPosition,
                     (CalculatedSize / new Vector2(Texture.Width, Texture.Height)), 
-                    Origin, 
+                    Vector2.Zero, 
                     0);
             }
             else if(Color.HasValue)
@@ -40,6 +40,8 @@ namespace Chroma.UI.Controls
                     CalculatedSize.Y, 
                     Color.Value);
             }
+
+            base.Draw(context);
         }
     }
 }

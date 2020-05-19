@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chroma" Version="0.3.2-alpha" />
+    <PackageReference Include="Chroma" Version="0.4.0-alpha" />
     <PackageReference Include="System.Text.Json" Version="5.0.0-preview.4.20251.6" />
   </ItemGroup>
 

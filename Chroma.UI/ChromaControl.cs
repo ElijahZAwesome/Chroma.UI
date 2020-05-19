@@ -16,8 +16,12 @@ namespace Chroma.UI
         public Vector2 Origin;
         public Vector2 AnchorPoint;
 
-        public Vector2 CalculatedPosition => (AnchorPoint + Position);
+        public Color? BorderColor = null;
+        public int BorderThickness;
+
+        public Vector2 CalculatedPosition => (AnchorPoint + Position) - CalculatedOrigin;
         public Vector2 CalculatedSize => (Size * Scale);
+        public Vector2 CalculatedOrigin => (Origin * Scale);
 
         private bool LMBPressedLastFrame = false;
         private bool RMBPressedLastFrame = false;
@@ -30,6 +34,7 @@ namespace Chroma.UI
             Scale = Vector2.One;
             Origin = Vector2.Zero;
             AnchorPoint = Vector2.Zero;
+            BorderThickness = 1;
         }
 
         public ChromaControl(Vector2 position, Vector2 size)
@@ -43,6 +48,17 @@ namespace Chroma.UI
 
         public virtual void Draw(RenderContext context)
         {
+            if (BorderColor.HasValue)
+            {
+                float oldThickness = context.LineThickness;
+                context.LineThickness = BorderThickness;
+                context.Rectangle(ShapeMode.Stroke,
+                    CalculatedPosition,
+                    CalculatedSize.X,
+                    CalculatedSize.Y,
+                    BorderColor.Value);
+                context.LineThickness = oldThickness;
+            }
         }
 
         public virtual void Update(float delta)

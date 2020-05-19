@@ -16,16 +16,17 @@ namespace Chroma.UI.Controls
         public Color TextColor;
         public string Text;
         public TrueTypeFont TextFont = null;
-        public int BorderThickness;
 
-        private bool HoldingButton = false;
+        public bool HoldingButton = false;
 
-        public Button(Vector2 position) : base(position, new Vector2(80, 25))
+        public Button(Vector2 position, TrueTypeFont textFont) : base(position, new Vector2(80, 25))
         {
             Color = Color.Gray;
             PressedColor = Color.Divide(2);
             TextColor = Color.Black;
             Text = "Button";
+            TextFont = textFont;
+            BorderColor = Color.Black;
             BorderThickness = 1;
         }
 
@@ -36,14 +37,7 @@ namespace Chroma.UI.Controls
                 CalculatedSize.X, 
                 CalculatedSize.Y, 
                 HoldingButton ? PressedColor : Color);
-            float oldThickness = context.LineThickness;
-            context.LineThickness = BorderThickness;
-            context.Rectangle(ShapeMode.Stroke,
-                CalculatedPosition,
-                CalculatedSize.X,
-                CalculatedSize.Y,
-                Color.Black);
-            context.LineThickness = oldThickness;
+            base.Draw(context);
             Vector2 textSize = TextFont.Measure(Text);
             Vector2 textPosition = CalculatedPosition + new Vector2(
                 (CalculatedSize.X / 2) - (textSize.X / 2),
