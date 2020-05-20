@@ -15,13 +15,10 @@ namespace Chroma.UI.ExampleProject
     class Example : Game
     {
 
-        private List<ChromaControl> UiControls;
+        private readonly List<ChromaControl> UiControls;
 
         private Texture testTexture;
-        private TrueTypeFont checkboxFont;
-        private TrueTypeFont buttonFont;
         private TrueTypeFont labelFont;
-        private TrueTypeFont inputFieldFont;
 
         public Example()
         {
@@ -53,8 +50,11 @@ namespace Chroma.UI.ExampleProject
                 {
                     AnchorPoint = new Vector2(Window.Properties.Width / 2, Window.Properties.Height / 2),
                     Checked = true
+                },
+                new InputField(Vector2.One)
+                {
+                    AllowOverflow = true
                 }
-                //new InputField(Vector2.One, inputFieldFont)
             };
             ((Button) UiControls[2]).ButtonPressed += ButtonPressed;
         }
@@ -69,6 +69,7 @@ namespace Chroma.UI.ExampleProject
             new UiContentLoader(Content).LoadUiContent();
 
             testTexture = Content.Load<Texture>("small.jpg");
+            labelFont = Content.Load<TrueTypeFont>("ARIAL.TTF");
         }
 
         protected override void Draw(RenderContext context)
@@ -84,6 +85,11 @@ namespace Chroma.UI.ExampleProject
         protected override void KeyPressed(KeyEventArgs e)
         {
             UiControls.ForEach(control => control.KeyPressed(e));
+        }
+
+        protected override void TextInput(TextInputEventArgs e)
+        {
+            UiControls.ForEach(control => control.TextInput(e));
         }
     }
 }

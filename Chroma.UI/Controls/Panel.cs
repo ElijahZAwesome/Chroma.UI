@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using Chroma.Graphics;
 
 namespace Chroma.UI.Controls
 {
     public class Panel : ChromaControl
     {
-
         public Texture Texture = null;
         public Color? Color = null;
 
@@ -25,21 +21,17 @@ namespace Chroma.UI.Controls
         public override void Draw(RenderContext context)
         {
             if (Texture != null)
-            {
-                context.DrawTexture(Texture, 
+                context.DrawTexture(Texture,
                     CalculatedPosition,
-                    (CalculatedSize / new Vector2(Texture.Width, Texture.Height)), 
-                    Vector2.Zero, 
+                    CalculatedSize / new Vector2(Texture.Width, Texture.Height),
+                    Vector2.Zero,
                     0);
-            }
-            else if(Color.HasValue)
-            {
-                context.Rectangle(ShapeMode.Fill, 
-                    CalculatedPosition, 
-                    CalculatedSize.X, 
-                    CalculatedSize.Y, 
+            else if (Color.HasValue)
+                context.Rectangle(ShapeMode.Fill,
+                    CalculatedPosition,
+                    CalculatedSize.X,
+                    CalculatedSize.Y,
                     Color.Value);
-            }
 
             base.Draw(context);
         }

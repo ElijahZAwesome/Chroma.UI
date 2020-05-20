@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 using Chroma.Graphics;
-using Chroma.UI;
 
 namespace Chroma.UI.Controls
 {
@@ -14,8 +9,8 @@ namespace Chroma.UI.Controls
         {
         }
 
-        public Image(Vector2 position, Vector2 dimensions, string textureUrl) 
-            : base(position, dimensions, new Texture(0,0))
+        public Image(Vector2 position, Vector2 dimensions, string textureUrl)
+            : base(position, dimensions, new Texture(0, 0))
         {
             Texture = ChromaExtensions.DownloadTexture(textureUrl);
         }

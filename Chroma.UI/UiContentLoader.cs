@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-using System.Text;
 using Chroma.ContentManagement;
-using Chroma.Graphics.TextRendering;
 
 namespace Chroma.UI
 {
     public class UiContentLoader
     {
         public static UiContentLoader Instance;
-        private IContentProvider Content;
+        private readonly IContentProvider Content;
 
         public string DefaultFontPath;
         public string CheckmarkTexturePath;

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using Chroma.Graphics;
 
 namespace Chroma.UI
 {
     internal class Caret
     {
-
         public Vector2 Position;
         public int Height;
         public int TextPosition = 0;
@@ -25,9 +21,9 @@ namespace Chroma.UI
 
         public void Draw(RenderContext context)
         {
-            float oldThickness = context.LineThickness;
+            var oldThickness = context.LineThickness;
             context.LineThickness = 1;
-            if(!inverted)
+            if (!inverted)
                 context.Line(Position, new Vector2(Position.X, Position.Y + Height), Color.Black);
             context.LineThickness = oldThickness;
         }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 using Chroma.Graphics;
 using Chroma.Input;
 using Chroma.Input.EventArgs;
@@ -10,7 +7,6 @@ namespace Chroma.UI
 {
     public class ChromaControl
     {
-
         public Vector2 Position;
         public Vector2 Size;
         public Vector2 Scale;
@@ -20,9 +16,9 @@ namespace Chroma.UI
         public Color? BorderColor = null;
         public int BorderThickness;
 
-        public Vector2 CalculatedPosition => (AnchorPoint + Position) - CalculatedOrigin;
-        public Vector2 CalculatedSize => (Size * Scale);
-        public Vector2 CalculatedOrigin => (Origin * Scale);
+        public Vector2 CalculatedPosition => AnchorPoint + Position - CalculatedOrigin;
+        public Vector2 CalculatedSize => Size * Scale;
+        public Vector2 CalculatedOrigin => Origin * Scale;
 
         private bool LMBPressedLastFrame = false;
         private bool RMBPressedLastFrame = false;
@@ -51,7 +47,7 @@ namespace Chroma.UI
         {
             if (BorderColor.HasValue)
             {
-                float oldThickness = context.LineThickness;
+                var oldThickness = context.LineThickness;
                 context.LineThickness = BorderThickness;
                 context.Rectangle(ShapeMode.Stroke,
                     CalculatedPosition,
@@ -73,9 +69,13 @@ namespace Chroma.UI
         {
         }
 
+        public virtual void TextInput(TextInputEventArgs e)
+        {
+        }
+
         public bool GetMouseUp(MouseButton button)
         {
-            bool pressedLastFrame = button switch
+            var pressedLastFrame = button switch
             {
                 MouseButton.Left => LMBPressedLastFrame,
                 MouseButton.Middle => MMBPressedLastFrame,
@@ -83,17 +83,14 @@ namespace Chroma.UI
                 _ => false
             };
 
-            if (pressedLastFrame && Mouse.IsButtonUp(button))
-            {
-                return true;
-            }
+            if (pressedLastFrame && Mouse.IsButtonUp(button)) return true;
 
             return false;
         }
 
         public bool GetMouseDown(MouseButton button)
         {
-            bool pressedLastFrame = button switch
+            var pressedLastFrame = button switch
             {
                 MouseButton.Left => LMBPressedLastFrame,
                 MouseButton.Middle => MMBPressedLastFrame,
@@ -101,10 +98,7 @@ namespace Chroma.UI
                 _ => false
             };
 
-            if (!pressedLastFrame && Mouse.IsButtonDown(button))
-            {
-                return true;
-            }
+            if (!pressedLastFrame && Mouse.IsButtonDown(button)) return true;
 
             return false;
         }

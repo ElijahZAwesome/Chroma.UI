@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using Chroma.Graphics;
 using Chroma.Graphics.TextRendering;
 using Chroma.Input;
@@ -10,13 +8,12 @@ namespace Chroma.UI.Controls
 {
     public class CheckBox : ChromaControl
     {
-
         public bool Checked;
         public string Text;
         public TrueTypeFont Font;
         public bool HoldingBox = false;
 
-        private Texture CheckmarkTexture;
+        private readonly Texture CheckmarkTexture;
 
         private const int BoxSize = 16;
         private const int BoxOffset = 4;
@@ -31,13 +28,13 @@ namespace Chroma.UI.Controls
 
         public override void Draw(RenderContext context)
         {
-            context.Rectangle(ShapeMode.Fill, 
-                CalculatedPosition + new Vector2(BoxOffset), 
-                BoxSize, 
+            context.Rectangle(ShapeMode.Fill,
+                CalculatedPosition + new Vector2(BoxOffset),
+                BoxSize,
                 BoxSize,
                 HoldingBox ? Color.White.Divide(2) : Color.White);
 
-            float oldThickness = context.LineThickness;
+            var oldThickness = context.LineThickness;
             context.LineThickness = 1;
             context.Rectangle(ShapeMode.Stroke,
                 CalculatedPosition + new Vector2(BoxOffset),
@@ -48,11 +45,9 @@ namespace Chroma.UI.Controls
 
             // Render Checkmark
             if (Checked)
-            {
                 context.DrawTexture(CheckmarkTexture,
                     CalculatedPosition + new Vector2(BoxOffset),
                     Vector2.One, Vector2.Zero, 0);
-            }
 
             context.DrawString(Font,
                 Text,
@@ -64,7 +59,7 @@ namespace Chroma.UI.Controls
 
         public override void Update(float delta)
         {
-            bool mouseOverlapping =
+            var mouseOverlapping =
                 ChromaExtensions.MouseOverlapping(Mouse.GetPosition(),
                     CalculatedPosition + new Vector2(BoxOffset), new Vector2(BoxSize));
             if (GetMouseUp(MouseButton.Left) && mouseOverlapping)

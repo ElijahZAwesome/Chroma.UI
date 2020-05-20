@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using Chroma.Graphics;
 using Chroma.Graphics.TextRendering;
 using Chroma.Input;
@@ -10,7 +8,6 @@ namespace Chroma.UI.Controls
 {
     public class Button : ChromaControl
     {
-
         public Color Color;
         public Color PressedColor;
         public Color TextColor;
@@ -32,33 +29,27 @@ namespace Chroma.UI.Controls
 
         public override void Draw(RenderContext context)
         {
-            context.Rectangle(ShapeMode.Fill, 
-                CalculatedPosition, 
-                CalculatedSize.X, 
-                CalculatedSize.Y, 
+            context.Rectangle(ShapeMode.Fill,
+                CalculatedPosition,
+                CalculatedSize.X,
+                CalculatedSize.Y,
                 HoldingButton ? PressedColor : Color);
             base.Draw(context);
-            Vector2 textSize = TextFont.Measure(Text);
-            Vector2 textPosition = CalculatedPosition + new Vector2(
-                (CalculatedSize.X / 2) - (textSize.X / 2),
-                (CalculatedSize.Y / 2) - (textSize.Y / 2));
-            context.DrawString(TextFont, Text, textPosition, 
-                (c, i, arg3, arg4) => 
-                    new GlyphTransformData(arg3) { Color = TextColor});
+            var textSize = TextFont.Measure(Text);
+            var textPosition = CalculatedPosition + new Vector2(
+                CalculatedSize.X / 2 - textSize.X / 2,
+                CalculatedSize.Y / 2 - textSize.Y / 2);
+            context.DrawString(TextFont, Text, textPosition,
+                (c, i, arg3, arg4) =>
+                    new GlyphTransformData(arg3) {Color = TextColor});
         }
 
         public override void Update(float delta)
         {
-            bool mouseOverlapping = 
+            var mouseOverlapping =
                 ChromaExtensions.MouseOverlapping(Mouse.GetPosition(), CalculatedPosition, CalculatedSize);
-            if (GetMouseUp(MouseButton.Left) && mouseOverlapping)
-            {
-                OnButtonPressed(EventArgs.Empty);
-            }
-            if (GetMouseDown(MouseButton.Left) && mouseOverlapping)
-            {
-                OnButtonDown(EventArgs.Empty);
-            }
+            if (GetMouseUp(MouseButton.Left) && mouseOverlapping) OnButtonPressed(EventArgs.Empty);
+            if (GetMouseDown(MouseButton.Left) && mouseOverlapping) OnButtonDown(EventArgs.Empty);
 
             HoldingButton = Mouse.IsButtonDown(MouseButton.Left) && mouseOverlapping;
             base.Update(delta);
