@@ -18,8 +18,7 @@ namespace Chroma.UI.Controls
         {
             Text = text;
             Color = Color.White;
-            Font = font;
-            Font.Size = fontSize;
+            Font = new TrueTypeFont(UiContentLoader.Instance.DefaultFontPath, fontSize);
         }
 
         public override void Draw(RenderContext context)

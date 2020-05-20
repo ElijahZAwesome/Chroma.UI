@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Text;
 using Chroma.Graphics;
 using Chroma.Input;
+using Chroma.Input.EventArgs;
 
 namespace Chroma.UI
 {
@@ -66,6 +67,10 @@ namespace Chroma.UI
             LMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Left);
             RMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Right);
             MMBPressedLastFrame = Mouse.IsButtonDown(MouseButton.Middle);
+        }
+
+        public virtual void KeyPressed(KeyEventArgs e)
+        {
         }
 
         public bool GetMouseUp(MouseButton button)

@@ -19,13 +19,13 @@ namespace Chroma.UI.Controls
 
         public bool HoldingButton = false;
 
-        public Button(Vector2 position, TrueTypeFont textFont) : base(position, new Vector2(80, 25))
+        public Button(Vector2 position) : base(position, new Vector2(80, 25))
         {
             Color = Color.Gray;
             PressedColor = Color.Divide(2);
             TextColor = Color.Black;
             Text = "Button";
-            TextFont = textFont;
+            TextFont = new TrueTypeFont(UiContentLoader.Instance.DefaultFontPath, 17);
             BorderColor = Color.Black;
             BorderThickness = 1;
         }
@@ -49,26 +49,19 @@ namespace Chroma.UI.Controls
 
         public override void Update(float delta)
         {
-            if (GetMouseUp(MouseButton.Left) && MouseOverlapping(Mouse.GetPosition()))
+            bool mouseOverlapping = 
+                ChromaExtensions.MouseOverlapping(Mouse.GetPosition(), CalculatedPosition, CalculatedSize);
+            if (GetMouseUp(MouseButton.Left) && mouseOverlapping)
             {
                 OnButtonPressed(EventArgs.Empty);
             }
-            if (GetMouseDown(MouseButton.Left) && MouseOverlapping(Mouse.GetPosition()))
+            if (GetMouseDown(MouseButton.Left) && mouseOverlapping)
             {
                 OnButtonDown(EventArgs.Empty);
             }
 
-            HoldingButton = Mouse.IsButtonDown(MouseButton.Left) && MouseOverlapping(Mouse.GetPosition());
+            HoldingButton = Mouse.IsButtonDown(MouseButton.Left) && mouseOverlapping;
             base.Update(delta);
-        }
-
-        public bool MouseOverlapping(Vector2 mousePos)
-        {
-            if (mousePos.X > CalculatedPosition.X + CalculatedSize.X) return false;
-            if (mousePos.X < CalculatedPosition.X) return false;
-            if (mousePos.Y > CalculatedPosition.Y + CalculatedSize.Y) return false;
-            if (mousePos.Y < CalculatedPosition.Y) return false;
-            return true;
         }
 
         protected virtual void OnButtonPressed(EventArgs e)

@@ -5,6 +5,8 @@ using System.Numerics;
 using System.Text;
 using Chroma.Graphics;
 using Chroma.Graphics.TextRendering;
+using Chroma.Input;
+using Chroma.Input.EventArgs;
 using Chroma.UI;
 using Chroma.UI.Controls;
 
@@ -16,15 +18,17 @@ namespace Chroma.UI.ExampleProject
         private List<ChromaControl> UiControls;
 
         private Texture testTexture;
+        private TrueTypeFont checkboxFont;
         private TrueTypeFont buttonFont;
         private TrueTypeFont labelFont;
+        private TrueTypeFont inputFieldFont;
 
         public Example()
         {
             UiControls = new List<ChromaControl>
             {
                 new Image(Vector2.Zero, new Vector2(300),
-                    "https://media.discordapp.net/attachments/142480770265513984/712359741053206625/MW2.png"),
+                    "https://cdn.discordapp.com/attachments/142480770265513984/712327512209752214/60a.jpg"),
                 new Panel(Vector2.Zero, new Vector2(150, 150), testTexture)
                 {
                     AnchorPoint = new Vector2(Window.Properties.Width / 2, Window.Properties.Height / 2),
@@ -33,7 +37,7 @@ namespace Chroma.UI.ExampleProject
                     BorderColor = Color.Red,
                     BorderThickness = 4
                 },
-                new Button(new Vector2(200, 200), buttonFont)
+                new Button(new Vector2(200, 200))
                 {
                     Color = Color.LightGray,
                     Text = "fuck"
@@ -44,9 +48,15 @@ namespace Chroma.UI.ExampleProject
                     22)
                 {
                     Color = Color.Red,
+                },
+                new CheckBox(Vector2.Zero)
+                {
+                    AnchorPoint = new Vector2(Window.Properties.Width / 2, Window.Properties.Height / 2),
+                    Checked = true
                 }
+                //new InputField(Vector2.One, inputFieldFont)
             };
-            //((Button) UiControls[2]).ButtonPressed += ButtonPressed;
+            ((Button) UiControls[2]).ButtonPressed += ButtonPressed;
         }
 
         private void ButtonPressed(object sender, EventArgs e)
@@ -56,9 +66,9 @@ namespace Chroma.UI.ExampleProject
 
         protected override void LoadContent()
         {
+            new UiContentLoader(Content).LoadUiContent();
+
             testTexture = Content.Load<Texture>("small.jpg");
-            buttonFont = Content.Load<TrueTypeFont>("ARIAL.TTF", 17);
-            labelFont = Content.Load<TrueTypeFont>("ARIAL.TTF", 17);
         }
 
         protected override void Draw(RenderContext context)
@@ -69,6 +79,11 @@ namespace Chroma.UI.ExampleProject
         protected override void Update(float delta)
         {
             UiControls.ForEach(control => control.Update(delta));
+        }
+
+        protected override void KeyPressed(KeyEventArgs e)
+        {
+            UiControls.ForEach(control => control.KeyPressed(e));
         }
     }
 }
