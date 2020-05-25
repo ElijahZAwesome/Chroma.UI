@@ -59,6 +59,8 @@ namespace Chroma.UI.Controls
 
         public override void Update(float delta)
         {
+            Size = new Vector2(BoxOffset + BoxSize + BoxOffset + Font.Measure(Text).X, BoxSize);
+
             var mouseOverlapping =
                 ChromaExtensions.MouseOverlapping(Mouse.GetPosition(),
                     CalculatedPosition + new Vector2(BoxOffset), new Vector2(BoxSize));

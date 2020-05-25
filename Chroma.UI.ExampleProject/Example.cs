@@ -22,17 +22,23 @@ namespace Chroma.UI.ExampleProject
 
         public Example()
         {
+            Graphics.AutoClearColor = Color.White;
             UiControls = new List<ChromaControl>
             {
                 new Image(Vector2.Zero, new Vector2(300),
-                    "https://cdn.discordapp.com/attachments/142480770265513984/712327512209752214/60a.jpg"),
+                    "https://cdn.discordapp.com/attachments/408196292347559946/675025199715975198/unknown.png"),
                 new Panel(Vector2.Zero, new Vector2(150, 150), testTexture)
                 {
                     AnchorPoint = new Vector2(Window.Properties.Width / 2, Window.Properties.Height / 2),
                     Origin = new Vector2(150f / 2f, 150f / 2f),
                     Scale = new Vector2(2),
                     BorderColor = Color.Red,
-                    BorderThickness = 4
+                    BorderThickness = 4,
+
+                    Children = new ChromaControlCollection()
+                    {
+                        new Button(Vector2.Zero)
+                    }
                 },
                 new Button(new Vector2(200, 200))
                 {
@@ -48,12 +54,26 @@ namespace Chroma.UI.ExampleProject
                 },
                 new CheckBox(Vector2.Zero)
                 {
-                    AnchorPoint = new Vector2(Window.Properties.Width / 2, Window.Properties.Height / 2),
+                    AnchorPoint = new Vector2(Window.Properties.Width / 2f, Window.Properties.Height / 2f),
                     Checked = true
                 },
-                new InputField(Vector2.One)
+                new InputField(new Vector2(10,10))
                 {
                     AllowOverflow = true
+                },
+                new GroupBox(new Vector2(380), new Vector2(200, 150))
+                {
+                    Text = "FUcking GroupBox",
+                    Children = new ChromaControlCollection()
+                    {
+                        new Button(Vector2.Zero),
+                        new CheckBox(Vector2.Zero),
+                        new CheckBox(Vector2.Zero) { Text = "Fuck"},
+                        new Label(Vector2.Zero, "Shit nuts")
+                        {
+                            Color = Color.Black
+                        }
+                    }
                 }
             };
             ((Button) UiControls[2]).ButtonPressed += ButtonPressed;

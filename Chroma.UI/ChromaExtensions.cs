@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Numerics;
@@ -45,15 +46,26 @@ namespace Chroma.UI
 
         public static Texture DownloadTexture(string url)
         {
-            using var client = new WebClient();
-            using Stream stream = client.OpenRead(url);
-            using var downloadedBmp = new Bitmap(stream);
-            var downloadedTexture = new Texture((ushort) downloadedBmp.Width, (ushort) downloadedBmp.Height);
-            for (var y = 0; y < downloadedBmp.Height; y++)
-            for (var x = 0; x < downloadedBmp.Width; x++)
-                downloadedTexture.SetPixel(x, y, downloadedBmp.GetPixel(x, y).ToChromaColor());
-            downloadedTexture.Flush();
-            return downloadedTexture;
+            try
+            {
+                using var client = new WebClient();
+                using Stream stream = client.OpenRead(url);
+                using var downloadedBmp = new Bitmap(stream);
+                var downloadedTexture = new Texture((ushort) downloadedBmp.Width, (ushort) downloadedBmp.Height);
+                for (var y = 0; y < downloadedBmp.Height; y++)
+                for (var x = 0; x < downloadedBmp.Width; x++)
+                    downloadedTexture.SetPixel(x, y, downloadedBmp.GetPixel(x, y).ToChromaColor());
+                downloadedTexture.Flush();
+                return downloadedTexture;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                var errorTexture = new Texture(1, 1);
+                errorTexture.SetPixel(0, 0, Color.Red);
+                errorTexture.Flush();
+                return errorTexture;
+            }
         }
 
         public static bool ShiftPressed(KeyEventArgs e)

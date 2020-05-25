@@ -28,5 +28,12 @@ namespace Chroma.UI.Controls
 
             base.Draw(context);
         }
+
+        public override void Update(float delta)
+        {
+            Size = Font.Measure(Text);
+
+            base.Update(delta);
+        }
     }
 }
