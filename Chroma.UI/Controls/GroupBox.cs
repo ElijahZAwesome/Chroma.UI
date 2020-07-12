@@ -42,11 +42,11 @@ namespace Chroma.UI.Controls
             Font = new TrueTypeFont(UiContentLoader.Instance.DefaultFontPath, 16);
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
-            DrawBorder(context);
+            DrawBorder(context, gfx);
 
-            ForeachInChildren(control => control.Draw(context));
+            ForeachInChildren(control => control.Draw(context, gfx));
 
             context.DrawString(Font,
                 Text,
@@ -55,12 +55,12 @@ namespace Chroma.UI.Controls
                     new GlyphTransformData(arg3) { Color = Color.Black });
         }
 
-        private void DrawBorder(RenderContext context)
+        private void DrawBorder(RenderContext context, GraphicsManager gfx)
         {
             if (BorderColor.HasValue)
             {
-                var oldThickness = context.LineThickness;
-                context.LineThickness = BorderThickness;
+                var oldThickness = gfx.LineThickness;
+                gfx.LineThickness = BorderThickness;
                 context.Line(CalculatedPosition, CalculatedPosition + new Vector2(0, CalculatedSize.Y),
                     BorderColor.Value);
                 context.Line(CalculatedPosition + new Vector2(CalculatedSize.X, CalculatedSize.Y),
@@ -69,8 +69,8 @@ namespace Chroma.UI.Controls
                     CalculatedPosition + new Vector2(CalculatedSize.X, 0), BorderColor.Value);
                 context.Line(CalculatedPosition + new Vector2(TextOffset.X, 0), CalculatedPosition, BorderColor.Value);
                 context.Line(CalculatedPosition + new Vector2(CalculatedSize.X, 0),
-                    CalculatedPosition + new Vector2(TextOffset.X + Font.Measure(Text).X, 0), BorderColor.Value);
-                context.LineThickness = oldThickness;
+                    CalculatedPosition + new Vector2(TextOffset.X + Font.Measure(Text).Width, 0), BorderColor.Value);
+                gfx.LineThickness = oldThickness;
             }
         }
 

@@ -45,7 +45,7 @@ namespace Chroma.UI.Controls
             Children[e.NewStartingIndex].Parent = this;
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             if (Texture != null)
                 context.DrawTexture(Texture,
@@ -60,7 +60,7 @@ namespace Chroma.UI.Controls
                     CalculatedSize.Y,
                     Color.Value);
 
-            base.Draw(context);
+            base.Draw(context, gfx);
         }
     }
 }

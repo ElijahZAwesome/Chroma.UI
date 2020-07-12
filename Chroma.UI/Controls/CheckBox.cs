@@ -26,7 +26,7 @@ namespace Chroma.UI.Controls
             CheckmarkTexture = new Texture(UiContentLoader.Instance.CheckmarkTexturePath);
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             context.Rectangle(ShapeMode.Fill,
                 CalculatedPosition + new Vector2(BoxOffset),
@@ -34,14 +34,14 @@ namespace Chroma.UI.Controls
                 BoxSize,
                 HoldingBox ? Color.White.Divide(2) : Color.White);
 
-            var oldThickness = context.LineThickness;
-            context.LineThickness = 1;
+            var oldThickness = gfx.LineThickness;
+            gfx.LineThickness = 1;
             context.Rectangle(ShapeMode.Stroke,
                 CalculatedPosition + new Vector2(BoxOffset),
                 BoxSize,
                 BoxSize,
                 Color.Black);
-            context.LineThickness = oldThickness;
+            gfx.LineThickness = oldThickness;
 
             // Render Checkmark
             if (Checked)
@@ -59,7 +59,7 @@ namespace Chroma.UI.Controls
 
         public override void Update(float delta)
         {
-            Size = new Vector2(BoxOffset + BoxSize + BoxOffset + Font.Measure(Text).X, BoxSize);
+            Size = new Vector2(BoxOffset + BoxSize + BoxOffset + Font.Measure(Text).Width, BoxSize);
 
             var mouseOverlapping =
                 ChromaExtensions.MouseOverlapping(Mouse.GetPosition(),

@@ -58,21 +58,21 @@ namespace Chroma.UI
             AnchorPoint = Vector2.Zero;
         }
 
-        public virtual void Draw(RenderContext context)
+        public virtual void Draw(RenderContext context, GraphicsManager gfx)
         {
             if (BorderColor.HasValue)
             {
-                var oldThickness = context.LineThickness;
-                context.LineThickness = BorderThickness;
+                var oldThickness = gfx.LineThickness;
+                gfx.LineThickness = BorderThickness;
                 context.Rectangle(ShapeMode.Stroke,
                     CalculatedPosition,
                     CalculatedSize.X,
                     CalculatedSize.Y,
                     BorderColor.Value);
-                context.LineThickness = oldThickness;
+                gfx.LineThickness = oldThickness;
             }
 
-            ForeachInChildren(control => control.Draw(context));
+            ForeachInChildren(control => control.Draw(context, gfx));
         }
 
         public virtual void Update(float delta)

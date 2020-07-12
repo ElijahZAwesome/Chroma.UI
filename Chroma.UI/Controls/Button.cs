@@ -27,18 +27,18 @@ namespace Chroma.UI.Controls
             BorderThickness = 1;
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             context.Rectangle(ShapeMode.Fill,
                 CalculatedPosition,
                 CalculatedSize.X,
                 CalculatedSize.Y,
                 HoldingButton ? PressedColor : Color);
-            base.Draw(context);
+            base.Draw(context, gfx);
             var textSize = TextFont.Measure(Text);
             var textPosition = CalculatedPosition + new Vector2(
-                CalculatedSize.X / 2 - textSize.X / 2,
-                CalculatedSize.Y / 2 - textSize.Y / 2);
+                CalculatedSize.X / 2 - textSize.Width / 2,
+                CalculatedSize.Y / 2 - textSize.Height / 2);
             context.DrawString(TextFont, Text, textPosition,
                 (c, i, arg3, arg4) =>
                     new GlyphTransformData(arg3) {Color = TextColor});

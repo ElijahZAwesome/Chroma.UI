@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using Chroma.Graphics;
 using Chroma.Graphics.TextRendering;
 using Chroma.Input;
@@ -18,6 +19,14 @@ namespace Chroma.UI.Controls
         public bool AllowOverflow;
         public bool Focused;
         public TrueTypeFont Font;
+        /// <summary>
+        /// Regex filter to only allow characters that match
+        /// </summary>
+        public string Filter;
+        /// <summary>
+        /// How many characters can be typed
+        /// </summary>
+        public int SizeLimit;
 
         private readonly Caret caret;
         private readonly Vector2 caretStartPosition;
@@ -37,7 +46,7 @@ namespace Chroma.UI.Controls
             UpdateOverflow();
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             context.Rectangle(ShapeMode.Fill,
                 CalculatedPosition,
@@ -48,8 +57,8 @@ namespace Chroma.UI.Controls
             {
                 var textSize = Font.Measure(Placeholder);
                 var textPosition = CalculatedPosition + new Vector2(
-                    CalculatedPosition.X,
-                    CalculatedSize.Y / 2 - textSize.Y / 2);
+                    0,
+                    CalculatedSize.Y / 2 - textSize.Height / 2);
                 context.DrawString(Font, Placeholder, textPosition + new Vector2(3, -1),
                     (c, i, arg3, arg4) =>
                         new GlyphTransformData(arg3) {Color = Color.LightSlateGray});
@@ -58,25 +67,25 @@ namespace Chroma.UI.Controls
             {
                 var textSize = Font.Measure(Text);
                 var textPosition = CalculatedPosition + new Vector2(
-                    CalculatedPosition.X,
-                    CalculatedSize.Y / 2 - textSize.Y / 2);
+                    0,
+                    CalculatedSize.Y / 2 - textSize.Height / 2);
                 context.DrawString(Font, Text, textPosition + new Vector2(3, -1),
                     (c, i, arg3, arg4) =>
                         new GlyphTransformData(arg3) {Color = Color.Black});
             }
 
-            if (Focused) caret.Draw(context);
+            if (Focused) caret.Draw(context, gfx);
 
             if (BorderColor.HasValue)
             {
-                var oldThickness = context.LineThickness;
-                context.LineThickness = BorderThickness;
+                var oldThickness = gfx.LineThickness;
+                gfx.LineThickness = BorderThickness;
                 context.Rectangle(ShapeMode.Stroke,
                     CalculatedPosition,
                     _renderedSize.X,
                     _renderedSize.Y,
                     BorderColor.Value);
-                context.LineThickness = oldThickness;
+                gfx.LineThickness = oldThickness;
             }
         }
 
@@ -92,7 +101,7 @@ namespace Chroma.UI.Controls
             caret.Update(delta);
 
             caret.Position = new Vector2(
-                caretStartPosition.X + Font.Measure(Text.Substring(0, caret.TextPosition)).X,
+                caretStartPosition.X + Font.Measure(Text.Substring(0, caret.TextPosition)).Width,
                 caretStartPosition.Y);
             base.Update(delta);
         }
@@ -117,6 +126,20 @@ namespace Chroma.UI.Controls
         {
             if (!Focused) return;
             caret.ResetTimer();
+
+            if (Filter != null)
+            {
+                if (!Regex.IsMatch(e.Text, Filter))
+                {
+                    return;
+                }
+            }
+
+            if (SizeLimit != 0)
+            {
+                if (Text.Length >= SizeLimit)
+                    return;
+            }
 
             OnTextChanged(EventArgs.Empty);
             var charToAdd = e.Text;
@@ -146,8 +169,8 @@ namespace Chroma.UI.Controls
                 var textPosition = CalculatedPosition + new Vector2(3, -1);
                 var textSize = Font.Measure(Text);
 
-                if (textPosition.X + textSize.X + 13 > CalculatedPosition.X + CalculatedSize.X)
-                    _renderedSize = new Vector2(textSize.X + 13, CalculatedSize.Y);
+                if (textPosition.X + textSize.Width + 13 > CalculatedPosition.X + CalculatedSize.X)
+                    _renderedSize = new Vector2(textSize.Width + 13, CalculatedSize.Y);
                 else
                     _renderedSize = CalculatedSize;
             }

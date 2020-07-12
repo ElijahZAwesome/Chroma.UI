@@ -1,6 +1,8 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 using Chroma.Graphics;
 using Chroma.Graphics.TextRendering;
+using Color = Chroma.Graphics.Color;
 
 namespace Chroma.UI.Controls
 {
@@ -18,7 +20,7 @@ namespace Chroma.UI.Controls
             Font.Size = fontSize;
         }
 
-        public override void Draw(RenderContext context)
+        public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             context.DrawString(Font,
                 Text,
@@ -26,12 +28,13 @@ namespace Chroma.UI.Controls
                 (c, i, arg3, arg4) =>
                     new GlyphTransformData(arg3) {Color = Color});
 
-            base.Draw(context);
+            base.Draw(context, gfx);
         }
 
         public override void Update(float delta)
         {
-            Size = Font.Measure(Text);
+            Size size = Font.Measure(Text);
+            Size = new Vector2(size.Width, size.Height);
 
             base.Update(delta);
         }

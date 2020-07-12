@@ -19,13 +19,13 @@ namespace Chroma.UI
             Height = height;
         }
 
-        public void Draw(RenderContext context)
+        public void Draw(RenderContext context, GraphicsManager gfx)
         {
-            var oldThickness = context.LineThickness;
-            context.LineThickness = 1;
+            var oldThickness = gfx.LineThickness;
+            gfx.LineThickness = 1;
             if (!inverted)
                 context.Line(Position, new Vector2(Position.X, Position.Y + Height), Color.Black);
-            context.LineThickness = oldThickness;
+            gfx.LineThickness = oldThickness;
         }
 
         public void Update(float delta)
