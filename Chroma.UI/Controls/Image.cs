@@ -18,5 +18,16 @@ namespace Chroma.UI.Controls
         {
             Texture = ChromaExtensions.DownloadTexture(textureUrl);
         }
+
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            foreach(var child in Children)
+                child.Dispose();
+
+            if(Texture != null)
+                Texture.Dispose();
+        }
     }
 }

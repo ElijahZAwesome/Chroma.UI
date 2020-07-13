@@ -121,6 +121,17 @@ namespace Chroma.UI.Controls
             });
         }
 
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            foreach(var child in Children)
+            {
+                child.Dispose();
+            }
+            Font.Dispose();
+        }
+
         private void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Children[e.NewStartingIndex].Parent = this;

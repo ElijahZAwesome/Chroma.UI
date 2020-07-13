@@ -4,11 +4,12 @@ using System.Runtime.CompilerServices;
 using Chroma.Graphics;
 using Chroma.Input;
 using Chroma.Input.EventArgs;
+using Chroma.MemoryManagement;
 using Chroma.UI.Controls;
 
 namespace Chroma.UI
 {
-    public class ChromaControl
+    public class ChromaControl : DisposableResource
     {
         public Vector2 Position;
         public Vector2 Size;
@@ -56,6 +57,11 @@ namespace Chroma.UI
             Scale = Vector2.One;
             Origin = Vector2.Zero;
             AnchorPoint = Vector2.Zero;
+        }
+
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
         }
 
         public virtual void Draw(RenderContext context, GraphicsManager gfx)

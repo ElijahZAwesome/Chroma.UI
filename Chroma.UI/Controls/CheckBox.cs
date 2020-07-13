@@ -74,6 +74,14 @@ namespace Chroma.UI.Controls
             base.Update(delta);
         }
 
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            Font.Dispose();
+            CheckmarkTexture.Dispose();
+        }
+
         protected virtual void OnCheckChanged(EventArgs e)
         {
             CheckChanged?.Invoke(this, e);

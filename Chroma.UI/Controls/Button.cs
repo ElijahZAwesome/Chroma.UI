@@ -55,6 +55,13 @@ namespace Chroma.UI.Controls
             base.Update(delta);
         }
 
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            TextFont.Dispose();
+        }
+
         protected virtual void OnButtonPressed(EventArgs e)
         {
             ButtonPressed?.Invoke(this, e);

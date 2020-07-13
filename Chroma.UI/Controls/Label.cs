@@ -38,5 +38,12 @@ namespace Chroma.UI.Controls
 
             base.Update(delta);
         }
+
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            Font.Dispose();
+        }
     }
 }

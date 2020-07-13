@@ -40,11 +40,6 @@ namespace Chroma.UI.Controls
             Children = new ChromaControlCollection();
         }
 
-        private void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            Children[e.NewStartingIndex].Parent = this;
-        }
-
         public override void Draw(RenderContext context, GraphicsManager gfx)
         {
             if (Texture != null)
@@ -61,6 +56,23 @@ namespace Chroma.UI.Controls
                     Color.Value);
 
             base.Draw(context, gfx);
+        }
+
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            foreach(var child in Children)
+            {
+                child.Dispose();
+            }
+            if(Texture != null)
+                Texture.Dispose();
+        }
+
+        private void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Children[e.NewStartingIndex].Parent = this;
         }
     }
 }

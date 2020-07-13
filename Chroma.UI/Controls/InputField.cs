@@ -180,6 +180,13 @@ namespace Chroma.UI.Controls
             }
         }
 
+        protected override void FreeManagedResources()
+        {
+            base.FreeManagedResources();
+
+            Font.Dispose();
+        }
+
         protected virtual void OnTextChanged(EventArgs e)
         {
             TextChanged?.Invoke(this, e);
